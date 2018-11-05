@@ -33,7 +33,7 @@ void CAsyncServerTcpClientContext::AppendRecvData(char* lpData, unsigned int cbD
 {
 	//UpdateLastDataReceiveTime();
 
-	//由于每次处理收到的消息包完成之后才会再次调用IssueClientRead。此处不存在多线程同时进入此函数的情况
+	
 	unsigned int cbOldBufferSize = m_cbBufferSize;
 	while ((unsigned int)cbDataLen + m_cbWriteOffset > m_cbBufferSize)
 		m_cbBufferSize *= 2;
@@ -65,7 +65,7 @@ void CAsyncServerTcpClientContext::AppendSendData(char *buf, unsigned int dataLe
 
 void CAsyncServerTcpClientContext::SkipRecvBuffer(unsigned int cbSkip)
 {
-	//由于每次处理收到的消息包完成之后才会再次调用IssueClientRead。此处不存在多线程同时进入此函数的情况
+	
 	memmove(m_pRecvBuffer, m_pRecvBuffer + cbSkip, m_cbWriteOffset - cbSkip);
 	m_cbWriteOffset -= cbSkip;
 }
@@ -111,7 +111,7 @@ bool CAsyncServer::CreateListenThread(int listenSocket, CAsyncServerTcpServerInf
 						
 						char hbuf[NI_MAXHOST];
 						char sbuf[NI_MAXSERV];
-						getnameinfo((sockaddr*)&clientaddr, in_len, hbuf, sizeof hbuf, sbuf, sizeof sbuf, NI_NUMERICHOST | NI_NUMERICSERV); //flag参数:以数字名返回
+						getnameinfo((sockaddr*)&clientaddr, in_len, hbuf, sizeof hbuf, sbuf, sizeof sbuf, NI_NUMERICHOST | NI_NUMERICSERV); //flag鍙傛暟:浠ユ暟瀛楀悕杩斿洖
 						strcpy(clientContext->_address, hbuf);
 						strcat(clientContext->_address, ":");
 						strcat(clientContext->_address, sbuf);
